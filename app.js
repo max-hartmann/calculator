@@ -1,7 +1,7 @@
 let displayValue = 0;
 let currentOperator = "";
-let firstOperand = null;
-let secondOperand = null;
+let firstOperand = "";
+let secondOperand = "";
 
 const mainResultDiv = document.querySelector(".mainresult");
 const subResultDiv = document.querySelector(".subresult");
@@ -54,43 +54,44 @@ deleteBtn.addEventListener("click", () => {
 })
 
 equalBtn.addEventListener("click", () => {
-    
+
+
+    if (firstOperand === "" && secondOperand === "" && currentOperator === "") return;
+    // if (secondOperand === "") return;
     secondOperand = displayValue;
-    if (firstOperand === null || secondOperand === null || currentOperator === null) {
-        return;
-    } else {
-        operate(currentOperator, firstOperand, secondOperand);
-        updateDisplay();
-        currentOperator = "";
-        firstOperand = "";
-        secondOperand = "";
-    }
-  
+    operate(currentOperator, firstOperand, secondOperand);
+    updateDisplay();
+    currentOperator = "";
+    firstOperand = "";
+    secondOperand = "";
+    displayValue = "";
+
+
 });
 
 
-function add(a,b) {
+function add(a, b) {
     return a + b;
 }
 
-function subtract(a,b) {
+function subtract(a, b) {
     return a - b;
 }
 
-function multiply(a,b) {
+function multiply(a, b) {
     return a * b;
 }
 
-function divide(a,b) {
-    if(b===0) return "ERROR";
-    return a/b;
+function divide(a, b) {
+    if (b === 0) return "ERROR";
+    return a / b;
 }
 
 function operate(operator, a, b) {
-    if(operator === "+") displayValue = add(a,b);
-    if(operator === "-") displayValue = subtract(a,b);
-    if(operator === "x") displayValue = multiply(a,b);
-    if(operator === "/") displayValue = divide(a,b);
+    if (operator === "+") displayValue = add(a, b);
+    if (operator === "-") displayValue = subtract(a, b);
+    if (operator === "x") displayValue = multiply(a, b);
+    if (operator === "/") displayValue = divide(a, b);
 }
 
 function getNumberInput(number) {
