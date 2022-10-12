@@ -1,7 +1,7 @@
 let displayValue = 0;
 let currentOperator = "";
-let firstOperand = 0;
-let secondOperand = 0;
+let firstOperand = null;
+let secondOperand = null;
 
 const mainResultDiv = document.querySelector(".mainresult");
 const subResultDiv = document.querySelector(".subresult");
@@ -12,6 +12,7 @@ const multiplyBtn = document.querySelector(".btn-multiply");
 const divideBtn = document.querySelector(".btn-divide");
 const clearBtn = document.querySelector(".btn-clear");
 const equalBtn = document.querySelector(".btn-equal");
+const deleteBtn = document.querySelector(".btn-delete");
 
 btn.forEach(elem => elem.addEventListener("click", () => {
     getNumberInput(elem.textContent);
@@ -47,10 +48,24 @@ divideBtn.addEventListener("click", () => {
 
 clearBtn.addEventListener("click", clear);
 
-equalBtn.addEventListener("click", () => {
-    secondOperand = displayValue;
-    operate(currentOperator, firstOperand, secondOperand);
+deleteBtn.addEventListener("click", () => {
+    displayValue = 0;
     updateDisplay();
+})
+
+equalBtn.addEventListener("click", () => {
+    
+    secondOperand = displayValue;
+    if (firstOperand === null || secondOperand === null || currentOperator === null) {
+        return;
+    } else {
+        operate(currentOperator, firstOperand, secondOperand);
+        updateDisplay();
+        currentOperator = "";
+        firstOperand = "";
+        secondOperand = "";
+    }
+  
 });
 
 
@@ -87,7 +102,7 @@ function getNumberInput(number) {
 
 function updateDisplay() {
     mainResultDiv.textContent = displayValue;
-    subResultDiv.textContent = firstOperand + currentOperator + secondOperand;
+    subResultDiv.textContent = `${firstOperand ? firstOperand : ""} ${currentOperator ? currentOperator : ""} ${secondOperand ? secondOperand : ""}`;
 }
 
 function clear() {
