@@ -14,6 +14,7 @@ const divideBtn = document.querySelector(".btn-divide");
 const clearBtn = document.querySelector(".btn-clear");
 const equalBtn = document.querySelector(".btn-equal");
 const deleteBtn = document.querySelector(".btn-delete");
+const decimalBtn = document.querySelector(".btn-decimal");
 
 btn.forEach(elem => elem.addEventListener("click", () => {
     getNumberInput(elem.textContent);
@@ -36,6 +37,8 @@ divideBtn.addEventListener("click", () => {
     setOperator("/");
 });
 
+decimalBtn.addEventListener("click", addDecimalPoint);
+
 clearBtn.addEventListener("click", clear);
 
 deleteBtn.addEventListener("click", () => {
@@ -45,9 +48,14 @@ deleteBtn.addEventListener("click", () => {
 equalBtn.addEventListener("click", evaluate);
 
 function evaluate() {
-    if(requiresScreenReset) return;
+    if(requiresScreenReset || !currentOperator) return;
     secondNumber = displayNumber;
+ 
     displayNumber = operate(currentOperator, firstNumber, secondNumber);
+    if(currentOperator==="/" && secondNumber === 0) {
+        displayNumber = "Do not divide by 0";
+    }
+
     updateDisplay();
     requiresScreenReset = true;
     currentOperator = "";
@@ -67,12 +75,16 @@ function getNumberInput(number) {
         updateDisplay();
         requiresScreenReset = false;
     }
-    displayNumber = parseInt("" + displayNumber + number);
+    displayNumber = parseFloat("" + displayNumber + number);
+}
+
+function addDecimalPoint() {
+    displayNumber = parseFloat("" + displayNumber + ".");
 }
 
 function updateDisplay() {
     mainResultDiv.textContent = displayNumber;
-    // subResultDiv.textContent = `${firstOperand ? firstOperand : ""} ${currentOperator ? currentOperator : ""} ${secondOperand ? secondOperand : ""}`;
+    subResultDiv.textContent = `${firstNumber ? firstNumber : ""} ${currentOperator ? currentOperator : ""} ${secondNumber ? secondNumber : ""}`;
 }
 
 function clear() {
@@ -83,11 +95,15 @@ function clear() {
     updateDisplay();
 }
 
+function round(number) {
+    return Math.round(number*100000000000000)/100000000000000;
+}
+
 function operate(operator, a, b) {
-    if (operator === "+") return add(a, b);
-    if (operator === "-") return subtract(a, b);
-    if (operator === "x") return multiply(a, b);
-    if (operator === "/") return divide(a, b);
+    if (operator === "+") return round(add(a, b));
+    if (operator === "-") return round(subtract(a, b));
+    if (operator === "x") return round(multiply(a, b));
+    if (operator === "/") return round(divide(a, b));
 }
 
 function add(a, b) {
