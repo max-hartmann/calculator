@@ -1,0 +1,53 @@
+[33mcommit ed1daa8a16fbabc8d8315e6cbab7cd115b7b5645[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/rework[m[33m, [m[1;32mrework[m[33m)[m
+Author: Max <maxhendrik@web.de>
+Date:   Sun Oct 16 17:09:35 2022 +0200
+
+    Rework operate and evaluate functions to allow chaining of operations via operator buttons
+
+[33mcommit 1b072e014156a9a639b6cbb9351d382d9211b0d2[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 12 22:22:12 2022 +0200
+
+    Prevent empty operation
+
+[33mcommit 2acae9b0a08c718928d28afa78a9f1adee3f92e9[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 12 22:16:28 2022 +0200
+
+    Prevent equal button firing same operation multiple times if user clicks more often
+
+[33mcommit 92bc0873dac435ef54a045f7ef4731ea8e93fcd6[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 12 21:59:50 2022 +0200
+
+    Add subtract multiply and divide functions
+
+[33mcommit 010a7896352e1591cec1b22d5611d3f6c4e722c6[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 5 22:58:08 2022 +0200
+
+    Add button listeners and first functionality for displaying values and addition
+
+[33mcommit 5143b6ee3873c5f7d89d50c77a13a2e06d21c463[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 5 22:03:15 2022 +0200
+
+    Add calculator styling
+
+[33mcommit 4d4368b85f52d403b5df9042a2be8c11800980d2[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 5 17:42:43 2022 +0200
+
+    Add boilerplate files
+
+[33mcommit c899e95a7bb4160a6903b898db0833d8dded8967[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 5 17:40:06 2022 +0200
+
+    Add readme
+
+[33mcommit 1b1339e4ec2a63b629a09c46897e667acec31065[m
+Author: Max <maxhendrik@web.de>
+Date:   Wed Oct 5 17:39:23 2022 +0200
+
+    Add readme
