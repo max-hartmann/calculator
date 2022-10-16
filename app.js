@@ -1,7 +1,8 @@
-let displayValue = 0;
+let displayNumber = "";
 let currentOperator = "";
-let firstOperand = "";
-let secondOperand = "";
+let firstNumber = "";
+let secondNumber = "";
+let requiresScreenReset = false;
 
 const mainResultDiv = document.querySelector(".mainresult");
 const subResultDiv = document.querySelector(".subresult");
@@ -16,59 +17,78 @@ const deleteBtn = document.querySelector(".btn-delete");
 
 btn.forEach(elem => elem.addEventListener("click", () => {
     getNumberInput(elem.textContent);
+    updateDisplay();
 }));
 
 addBtn.addEventListener("click", () => {
-    firstOperand = displayValue;
-    currentOperator = "+";
-    displayValue = 0;
-    updateDisplay();
+   setOperator("+");
 });
 
 subtractBtn.addEventListener("click", () => {
-    firstOperand = displayValue;
-    currentOperator = "-";
-    displayValue = 0;
-    updateDisplay();
+    setOperator("-");
 });
 
 multiplyBtn.addEventListener("click", () => {
-    firstOperand = displayValue;
-    currentOperator = "x";
-    displayValue = 0;
-    updateDisplay();
+    setOperator("x");
 });
 
 divideBtn.addEventListener("click", () => {
-    firstOperand = displayValue;
-    currentOperator = "/";
-    displayValue = 0;
-    updateDisplay();
+    setOperator("/");
 });
 
 clearBtn.addEventListener("click", clear);
 
 deleteBtn.addEventListener("click", () => {
-    displayValue = 0;
-    updateDisplay();
+   
 })
 
-equalBtn.addEventListener("click", () => {
+equalBtn.addEventListener("click", evaluate);
 
-
-    if (firstOperand === "" && secondOperand === "" && currentOperator === "") return;
-    // if (secondOperand === "") return;
-    secondOperand = displayValue;
-    operate(currentOperator, firstOperand, secondOperand);
+function evaluate() {
+    if(requiresScreenReset) return;
+    secondNumber = displayNumber;
+    displayNumber = operate(currentOperator, firstNumber, secondNumber);
     updateDisplay();
+    requiresScreenReset = true;
     currentOperator = "";
-    firstOperand = "";
-    secondOperand = "";
-    displayValue = "";
+}
 
+function setOperator(operator) {
+    if(currentOperator) evaluate();
 
-});
+    currentOperator = operator;
+    firstNumber = displayNumber;
+    requiresScreenReset = true;
+}
 
+function getNumberInput(number) {
+    if(requiresScreenReset) {
+        displayNumber = 0;
+        updateDisplay();
+        requiresScreenReset = false;
+    }
+    displayNumber = parseInt("" + displayNumber + number);
+}
+
+function updateDisplay() {
+    mainResultDiv.textContent = displayNumber;
+    // subResultDiv.textContent = `${firstOperand ? firstOperand : ""} ${currentOperator ? currentOperator : ""} ${secondOperand ? secondOperand : ""}`;
+}
+
+function clear() {
+    displayNumber = "";
+    currentOperator = "";
+    firstNumber = "";
+    secondNumber = "";
+    updateDisplay();
+}
+
+function operate(operator, a, b) {
+    if (operator === "+") return add(a, b);
+    if (operator === "-") return subtract(a, b);
+    if (operator === "x") return multiply(a, b);
+    if (operator === "/") return divide(a, b);
+}
 
 function add(a, b) {
     return a + b;
@@ -85,32 +105,4 @@ function multiply(a, b) {
 function divide(a, b) {
     if (b === 0) return "ERROR";
     return a / b;
-}
-
-function operate(operator, a, b) {
-    if (operator === "+") displayValue = add(a, b);
-    if (operator === "-") displayValue = subtract(a, b);
-    if (operator === "x") displayValue = multiply(a, b);
-    if (operator === "/") displayValue = divide(a, b);
-}
-
-function getNumberInput(number) {
-    let displayValueString = "" + displayValue + number;
-    displayValue = parseInt(displayValueString);
-
-    updateDisplay();
-}
-
-function updateDisplay() {
-    mainResultDiv.textContent = displayValue;
-    subResultDiv.textContent = `${firstOperand ? firstOperand : ""} ${currentOperator ? currentOperator : ""} ${secondOperand ? secondOperand : ""}`;
-}
-
-function clear() {
-    displayValue = 0;
-    firstOperand = 0;
-    secondOperand = 0;
-    currentOperator = "";
-
-    updateDisplay();
 }
