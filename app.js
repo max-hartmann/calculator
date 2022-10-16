@@ -3,6 +3,7 @@ let currentOperator = "";
 let firstNumber = "";
 let secondNumber = "";
 let requiresScreenReset = false;
+let addDecimalWithNextInput = false;
 
 const mainResultDiv = document.querySelector(".mainresult");
 const subResultDiv = document.querySelector(".subresult");
@@ -42,7 +43,8 @@ decimalBtn.addEventListener("click", addDecimalPoint);
 clearBtn.addEventListener("click", clear);
 
 deleteBtn.addEventListener("click", () => {
-   
+    deleteLastDigit();
+    updateDisplay();
 })
 
 equalBtn.addEventListener("click", evaluate);
@@ -75,11 +77,24 @@ function getNumberInput(number) {
         updateDisplay();
         requiresScreenReset = false;
     }
-    displayNumber = parseFloat("" + displayNumber + number);
+
+    if(addDecimalWithNextInput) {
+        displayNumber = parseFloat("" + displayNumber + "." + number);
+        addDecimalWithNextInput = false;
+    } else {
+        displayNumber = parseFloat("" + displayNumber + number);
+    }
 }
 
 function addDecimalPoint() {
-    displayNumber = parseFloat("" + displayNumber + ".");
+    
+    if(displayNumber.toString().includes(".")) return;
+    addDecimalWithNextInput = true;
+
+}
+
+function deleteLastDigit() {
+    displayNumber = displayNumber.toString().slice(0, -1);
 }
 
 function updateDisplay() {
